@@ -1,0 +1,24 @@
+Master Mentor From's Editor -  Software for creating HTML GUI Interfaces
+
+Copyright © 2022 Master Mentor, STEAMPC Club (https://steamclub.net)
+
+------------------------------------------
+LICENSE (LANG:EN)
+------------------------------------------
+
+This information product (hereinafter referred to as the object) is an object of copyright, and is distributed under the CC–BY-NC-ND license.
+It is allowed to use, distribute, exchange the object under the following conditions: the authorship of the object is indicated; the object is used for non-commercial purposes; modification of the object or the use of its parts is prohibited; the object, including this license, is distributed unchanged.
+It is prohibited to use the object for commercial purposes. It is prohibited to use the facility for any purpose by institutions where the number of staff or students exceeds 5 (five) people, or if the annual cash receipts of the institution exceed 30,000 (thirty thousand) US dollars.
+This object can be licensed under other licenses, for which you should contact the copyright holders of the object.
+The object was developed by: Master Mentor in 2022.
+
+------------------------------------------
+ЛИЦЕНЗИЯ (LANG:RU)
+------------------------------------------
+
+Данный информационные продукт (далее – объект) является объектом авторского права, и распространяется под лицензией CC-BY-NC-ND.
+Разрешено пользование, распространение, обмен объектом на следующих условиях: указано авторство объекта; объект используются в некоммерческих целях; изменение объекта либо использование его частей запрещено; объект, включая данную лицензию, распространяется в неизменном виде.
+Запрещено пользование объекта в коммерческих целях. Запрещено пользование объекта в любых целях учреждениями, где количество персонала либо обучающихся превышает 5 (пять) человек, либо если годовые денежные поступления учреждения превышают 30000 (тридцать тысяч) долларов США.
+Данный объект может быть лицензирован под другими лицензиями, для чего следует обратиться к правообладателям объекта.
+Объект разработан: Master Mentor в 2022 году.
+

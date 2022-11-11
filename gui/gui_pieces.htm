@@ -1,0 +1,434 @@
+<!--GUI_APP.LICENCE-->
+Master Mentor From's Editor -  Software for creating HTML GUI Interfaces
+
+Copyright © 2022 Master Mentor, STEAMPC Club (https://steamclub.net)
+
+------------------------------------------
+LICENSE (LANG:EN)
+------------------------------------------
+
+This information product (hereinafter referred to as the object) is an object of copyright, and is distributed under the CC–BY-NC-ND license.
+It is allowed to use, distribute, exchange the object under the following conditions: the authorship of the object is indicated; the object is used for non-commercial purposes; modification of the object or the use of its parts is prohibited; the object, including this license, is distributed unchanged.
+It is prohibited to use the object for commercial purposes. It is prohibited to use the facility for any purpose by institutions where the number of staff or students exceeds 5 (five) people, or if the annual cash receipts of the institution exceed 30,000 (thirty thousand) US dollars.
+This object can be licensed under other licenses, for which you should contact the copyright holders of the object.
+The object was developed by: Master Mentor in 2022.
+
+------------------------------------------
+ЛИЦЕНЗИЯ (LANG:RU)
+------------------------------------------
+
+Данный информационные продукт (далее – объект) является объектом авторского права, и распространяется под лицензией CC-BY-NC-ND.
+Разрешено пользование, распространение, обмен объектом на следующих условиях: указано авторство объекта; объект используются в некоммерческих целях; изменение объекта либо использование его частей запрещено; объект, включая данную лицензию, распространяется в неизменном виде.
+Запрещено пользование объекта в коммерческих целях. Запрещено пользование объекта в любых целях учреждениями, где количество персонала либо обучающихся превышает 5 (пять) человек, либо если годовые денежные поступления учреждения превышают 30000 (тридцать тысяч) долларов США.
+Данный объект может быть лицензирован под другими лицензиями, для чего следует обратиться к правообладателям объекта.
+Объект разработан: Master Mentor в 2022 году.
+<!--GUI_APP.LICENCE-->
+
+<!--GUI_APP.LANG_NEUTRAL-->
+
+<!-- =Json GUI_APP.LAYOUT_TIPS_COLORS-->
+{
+	"speed"				: 50,
+	"delay"				: 1500,
+	"position"			: "bottom",
+	
+	"color"				: "black",
+	"titleColor"		: "black",
+	"titleBackground"	: "#a8a8a8",
+	"background"		: "#FBFADD",
+	
+	"content"			: "Tip text or html",
+	"titleContent"		: "Help"
+}
+<!--GUI_APP.LAYOUT_TIPS_COLORS-->
+
+<!--GUI_APP.LANG_NEUTRAL-->
+
+<!--GUI_APP.LANG_EN-->
+
+<!-- =Json GUI_APP.LAYOUT_TIPS-->
+{
+	"ED80_FORM_TYPE_label"			: "Block with text",
+	"ED80_FORM_TYPE_input_text"		: "Input type = text",
+	"ED80_FORM_TYPE_input_number"	: "Input type = number",
+	"ED80_FORM_TYPE_input_password"	: "Input type = password",
+	"ED80_FORM_TYPE_input_button"	: "Input type = button",
+	"ED80_FORM_TYPE_input_checkbox"	: "Input type = checkbox",
+	"ED80_FORM_TYPE_input_radio"	: "Input type = radio",
+	"ED80_FORM_TYPE_input_any_type"	: "Specify input type in 'Raw tag' field",
+	"ED80_FORM_TYPE_select"			: "Select element",
+	"ED80_FORM_TYPE_textarea"		: "Textarea element",
+	"ED80_FORM_TYPE_div_rectangle"	: "Rectangle element",
+	"ED80_FORM_TYPE_div_container"	: "Element &lt; div &gt;",
+	"ED80_FORM_TYPE_img"			: "Element &lt; img &gt;",
+
+	"ED80_BTN_do_grid_cancel"	: "Revert fields changes",
+	"ED80_BTN_do_grid_apply"	: "Apply changes",
+	"ED80_BTN_do_mode_preview"	: "See Form in release mode",
+	"ED80_BTN_do_mode_edit"		: "See Form in editor mode",
+
+	"ED80_GRID_step_xy"			: "Grid cell size",
+	"ED80_CHECK_grid_snap"		: "Snap elements to grid",
+	"ED80_CHECK_mode_resizable"	: "Do elements resizable during editing",
+
+	"ED80_ITEM_tag_raw_text"	: "Any text (attributes ect.) inside HTML tag",
+	"ED80_CHECK_ITEM_interaction_type"	: "Interaction type between browser DOM node and Form field",
+
+	"ED80_CHECK_ITEM_tref_T"	: "Check type",
+	"ED80_CHECK_ITEM_tref_R_0"	: "Check range from, &gt;=",
+	"ED80_CHECK_ITEM_tref_R_1"	: "Check range to, &lt;=",
+	"ED80_CHECK_ITEM_tref_E"	: "Check equal (Json array like [1,2, \" ect.\"])",
+
+	"ED80_ITEM_x"				: "Item X coordinate (Ctrl+Left, Ctrl+Right)",
+	"ED80_ITEM_y"				: "Item Y coordinate (Ctrl+Up, Ctrl+Down)",
+
+	"ED80_BTN_Z_top"			: "Bring Item to Form top (Shift+PageUp)",
+	"ED80_BTN_Z_end"			: "Bring Item to Form back (Shift+PageDown)",
+	"ED80_BTN_Z_up"				: "Bring Item up (PageUp)",
+	"ED80_BTN_Z_down"			: "Bring Item down (PageUp)",
+	"ED80_BTN_EL_first"			: "Goto top Form Item",
+	"ED80_BTN_EL_last"			: "Goto back Form Item",
+	"ED80_BTN_EL_prev"			: "Goto previuos Item",
+	"ED80_BTN_EL_next"			: "Goto next Item",
+	"ED80_BTN_do_cancel"		: "Revert fields changes",
+	"ED80_BTN_do_apply"			: "Apply fields changes",
+	"ED80_BTN_do_delete"		: "Delete selected Item (Del)",
+	"ED80_BTN_do_clone"			: "Clone selected Item (Ctrl+C)",
+	"ED80_BTN_do_layout_new"	: "Create new Layout",
+	"ED80_BTN_do_from_json"		: "Generate Layout json",
+	"ED80_BTN_do_to_json"		: "Do Layout from json",
+	"ED80_BTN_do_undo"			: "Undo (Ctrl+Z)",
+	"ED80_BTN_do_redo"			: "Redo (Ctrl+Y)",
+	"ED80_BTN_do_reset_editor"	: "Reset editor to default state. (Use to reset errors ect.)",
+	"ED80_ITEM_storage"			: "Custom item's storage for save any related item data",
+	"ED80_FORM_JSON_textarea"	: "Json of editing Form",
+	"ED80_ITEM_body"			: "Select Control options"
+}
+<!--GUI_APP.LAYOUT_TIPS-->
+
+<!--GUI_APP.LANG_EN-->
+
+
+<!--GUI_APP.LANG_RU-->
+
+<!--GUI_APP.LAYOUT_HOME-->
+<!--GUI_APP.LAYOUT_HOME-->
+
+
+<!--GUI_APP.LANG_RU-->
+
+
+<!--GUI_APP.LANG_NEUTRAL-->
+
+<!--GUI_APP.HTML_PAGE-->
+
+<html>
+<head>
+<title>Forms Editor (c) Master Mentor 2022</title>
+<meta charset='utf-8'>
+
+<link rel="stylesheet" href="lib/jquery-ui.css">
+<link rel="stylesheet" href="lib_ui/tipso.css">
+
+<script type='text/javascript' src='lib/jquery-ui.js'></script>
+
+<script type='text/javascript' src='lib_ui/tipso.js'></script>
+<script type='text/javascript' src='lib_ui/copy-text-to-clipboard.js'></script>
+
+<style>
+
+.ED80_item_draggable_wrapper_stub
+{
+}
+
+.ED80_item_dashed_box
+{
+	border:		1px dashed black;
+}
+
+.ED80_item_selected_red
+{
+	border:		1px solid red;
+	cursor:		move;
+}
+
+.ED80_item_flat
+{
+	border:		1px solid black;
+	display:	inline-block;
+	padding:	0;
+	margin:		0;
+	float:		none;
+	vertical-align:top;
+}
+
+.ED80_item_rectangle
+{
+	border:		1px solid black;
+	display:	inline-block;
+	padding:	5;
+	margin:		5;
+	float:		none;
+	vertical-align:top;
+	width:		90%;
+}
+
+/*
+<div style="width: 300px; max-height: 100px; 
+overflow-y: scroll;"  contenteditable="true">
+
+Div with editable content.
+
+</div>
+*/
+
+.ED80_grid_css
+{
+    background-image:
+      repeating-linear-gradient(#ccc 0 1px, transparent 1px 100%),
+      repeating-linear-gradient(90deg, #ccc 0 1px, transparent 1px 100%);
+    background-size: 20px 20px;
+}
+
+.ED80_width_100
+{
+	width:		100%;
+}
+.ED80_width_80
+{
+	width:		60% !important;
+}
+.ED80_width_60
+{
+	width:		60% !important;
+}
+.ED80_width_50
+{
+	width:		50% !important;
+}
+.ED80_width_30
+{
+	width:		30% !important;
+}
+.ED80_width_20
+{
+	width:		20% !important;
+}
+
+.ED80_wrap_0
+{
+	display:	inline-block;
+	width:		100%;
+}
+
+.ED80_div_rectangle
+{
+	width:		100%;
+	height:		30px;
+} 
+
+.ED80_div_container
+{
+	width:		100%;
+	height:		30px;
+	border:		1px dashed black;
+} 
+
+.ED80_panel_left
+{
+	width:		15%;
+	height:		100%;
+} 
+
+.ED80_panel_right
+{
+	width:		20%;
+	height:		100%;
+} 
+.ED80_panel_center
+{
+	height:		100%;
+	
+	text-align: center;
+} 
+
+</style>
+
+</head>
+<body onload=events_gateway('init2')>
+
+<div class="" style = "display: flex; align-content: stretch;">
+<div class="ED80_width_100">
+HGFE - HTML GUI Forms Editor (c) Master Mentor 2022 v 1.00.05
+<br>
+<div>
+<div class="ED80_item_flat ED80_panel_left">
+<div class="ED80_item_rectangle">
+<b>Items</b><br>
+
+<input		id="ED80_FORM_TYPE_label"		class="ED80_width_100" type="text"  value="Label"><br>
+
+<input		id="ED80_FORM_TYPE_input_text"		class="ED80_width_100" type="text"  value="Text Field"><br>
+
+<input		id="ED80_FORM_TYPE_input_number"	class="ED80_width_100" type="text"  value="Number Field"><br>
+
+<input		id="ED80_FORM_TYPE_input_password"	class="ED80_width_100" type="text"  value="Password Field"><br>
+
+<button		id="ED80_FORM_TYPE_input_button"	class="ED80_width_100" type="button">Button</button><br>
+
+<input		id="ED80_FORM_TYPE_input_checkbox"	class="ED80_width_100" type="checkbox" checked="checked"><br>
+
+<input		id="ED80_FORM_TYPE_input_radio"		class="ED80_width_100" type="radio" checked="checked" name=""><br>
+
+<input		id="ED80_FORM_TYPE_input_any_type"	class="ED80_width_100" type="text" value="Custom Field"><br>
+
+<input		id="ED80_FORM_TYPE_select"			class="ED80_width_100" type="text"  value="Select Control"><br>
+
+<input		id="ED80_FORM_TYPE_textarea"		class="ED80_width_100" type="text"  value="Textarea"><br>
+
+<div		id="ED80_FORM_TYPE_div_rectangle"	class="ED80_item_flat ED80_div_rectangle ED80_width_100">Rectangle</div><br>
+
+<div		id="ED80_FORM_TYPE_div_container"	class="ED80_item_flat ED80_div_container ED80_width_100">div</div><br>
+
+<img		id="ED80_FORM_TYPE_img" src="" 		width="30" height="30"><br>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Grid</b><br>Step: <input	id="ED80_GRID_step_xy"		class="ED80_wrap_0 ED80_width_50" type="text"><br>
+<input		id="ED80_CHECK_grid_snap"		class="" type="checkbox" checked="checked">Snap
+<input		id="ED80_CHECK_mode_resizable"	class="" type="checkbox" checked="checked">Resizable<br>
+<button		id="ED80_BTN_do_grid_cancel"	class="ED80_width_100 ED80_width_50" type="button">Cancel</button><button			id="ED80_BTN_do_grid_apply"		class="ED80_width_100 ED80_width_50" type="button">Apply</button><br>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Measures</b>
+<br>
+Pixel ratio: <span id="ED80_EDITOR_pixel_ratio"></span> / Zoom: <span id="ED80_EDITOR_zoom"></span><br>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Editor</b>
+<br>
+Layout:<br>
+<button		id="ED80_BTN_do_layout_new"		class="ED80_width_100 ED80_width_50" type="button">New</button><button			id="ED80_BTN_do_layout_clear"			class="ED80_width_100 ED80_width_50" type="button">Clear</button><br>
+Step #<span id="ED80_EDITOR_undo_step_no"></span> from: <span id="ED80_EDITOR_undo_steps_total"></span><br>
+<button			id="ED80_BTN_do_redo"		class="ED80_width_100 ED80_width_50" type="button">Redo</button><button		id="ED80_BTN_do_undo"			class="ED80_width_100 ED80_width_50" type="button">Undo</button><br>
+<br>
+<button		id="ED80_BTN_do_reset_editor"	class="ED80_width_100" type="button">Reset Editor</button>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Form Json</b>
+<textarea	id="ED80_FORM_JSON_textarea"	class="ED80_width_100" rows="3" cols="20"></textarea><br>
+<button		id="ED80_FORM_JSON_do_clear"	class="ED80_width_100 ED80_width_50" type="button">Clear</button><button		id="ED80_FORM_JSON_do_copy"			class="ED80_width_100 ED80_width_50" type="button">Copy</button><br>
+<button		id="ED80_BTN_do_from_json"		class="ED80_width_100 ED80_width_50" type="button">From Json</button><button			id="ED80_BTN_do_to_json"		class="ED80_width_100 ED80_width_50" type="button">To Json</button><br>
+</div>
+
+</div>
+
+
+<div class="ED80_item_flat ED80_panel_center">
+<div class="ED80_item_flat" id="ED80_container___panel_center"></div>
+</div>
+
+
+<div class="ED80_item_flat ED80_panel_right">
+<form action="">
+<div class="ED80_item_rectangle">
+<b>Mode</b><br>
+<button			id="ED80_BTN_do_mode_edit"		class="ED80_width_100 ED80_width_50" type="button">Edit</button><button		id="ED80_BTN_do_mode_preview"	class="ED80_width_100 ED80_width_50" type="button">Preview</button><br>
+
+<b>Items</b><br>
+<button		id="ED80_BTN_do_cancel"			class="ED80_width_100 ED80_width_50" type="button">Cancel</button><button			id="ED80_BTN_do_apply"			class="ED80_width_100 ED80_width_50" type="submit" onclick="return false;" >Apply</button><br>
+<button		id="ED80_BTN_do_delete"			class="ED80_width_100 ED80_width_50" type="button">Delete</button><button			id="ED80_BTN_do_clone"			class="ED80_width_100 ED80_width_50" type="button">Clone</button><br>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Type:</b> <span id="ED80_EDITOR_ITEM_description"></span> / <b>ID:</b> <input		id="ED80_ITEM_id"				class="ED80_wrap_0" type="text"><br>
+X / Y:<br>
+<input			id="ED80_ITEM_x"				class="ED80_wrap_0 ED80_width_50" type="text"><input		id="ED80_ITEM_y"				class="ED80_wrap_0 ED80_width_50" type="text"><br>
+Width / Height:<br>
+<input	id="ED80_ITEM_w"			class="ED80_wrap_0 ED80_width_50" type="text"><input	id="ED80_ITEM_h"			class="ED80_wrap_0 ED80_width_50" type="text"><br>
+</div>
+
+<div class="ED80_item_rectangle">
+Value: <textarea	id="ED80_ITEM_value"		class="ED80_width_100" rows="2" cols="20"></textarea><br>
+Class: <input	id="ED80_ITEM_class"			class="ED80_wrap_0" type="text"><br>
+OnClick: <input	id="ED80_ITEM_onclick"			class="ED80_wrap_0" type="text"><br>
+Raw tag: <textarea	id="ED80_ITEM_tag_raw_text"	class="ED80_width_100" rows="2" cols="20"></textarea><br>
+
+<input		id="ED80_CHECK_ITEM_is_disabled"	class="" type="checkbox">Disabled
+<input		id="ED80_CHECK_ITEM_is_hidden"		class="" type="checkbox">Hidden
+<input		id="ED80_CHECK_ITEM_is_readonly"	class="" type="checkbox">ReadOnly
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Interaction:</b> <select		id="ED80_CHECK_ITEM_interaction_type"			class="">
+  <option value="0">Both (Item &lt;-&gt; Dom)</option>
+  <option value="1">Static (Item /-> Dom)</option>
+  <option value="2">Skip (Item x Dom)</option>
+  <option value="3">ReadOnly  (Item &lt;- Dom)</option>
+  <option value="4">WriteOnly (Item -&gt; Dom)</option>
+</select>
+</div>
+
+<div class="ED80_item_rectangle">
+<b>Check:</b> Type/Range/Equal<br>
+<select		id="ED80_CHECK_ITEM_tref_T"			class=" ED80_width_30">
+  <option value="--">--</option>
+  <option value="string">String</option>
+  <option value="integer">Integer</option>
+  <option value="number">Number</option>
+  <option value="boolean">Boolean</option>
+  <option value="json">Json</option>
+  <option value="null">Null</option>
+  <option value="empty">Empty</option>
+</select>
+<input	id="ED80_CHECK_ITEM_tref_R_0"		class="ED80_wrap_0 ED80_width_30" type="number">-<input	id="ED80_CHECK_ITEM_tref_R_1"			class="ED80_wrap_0 ED80_width_30" type="number"><br>
+<textarea	id="ED80_CHECK_ITEM_tref_E"		class="ED80_width_100" rows="3" cols="20"></textarea><br>
+</div>
+
+
+<div class="ED80_item_rectangle">
+<b>Level</b><br>
+Z: <input	id="ED80_ITEM_z"				class="ED80_wrap_0 ED80_width_50" type="text"><br>
+<button		id="ED80_BTN_Z_up"				class="ED80_item_flat" style="width:22%;" type="button">Up</button>
+<button		id="ED80_BTN_Z_down"			class="ED80_item_flat" style="width:22%;" type="button">Down</button>
+<button		id="ED80_BTN_Z_top"				class="ED80_item_flat" style="width:22%;" type="button">Top</button>
+<button		id="ED80_BTN_Z_end"				class="ED80_item_flat" style="width:22%;" type="button">End</button>
+<br>
+
+Items Total: <span id="ED80_EDITOR_items_total"></span>
+<br>
+<button		id="ED80_BTN_EL_prev"			class="ED80_item_flat" style="width:22%;" type="button">Prev</button>
+<button		id="ED80_BTN_EL_next"			class="ED80_item_flat" style="width:22%;" type="button">Next</button>
+<button		id="ED80_BTN_EL_first"			class="ED80_item_flat" style="width:22%;" type="button">First</button>
+<button		id="ED80_BTN_EL_last"			class="ED80_item_flat" style="width:22%;" type="button">Last</button>
+<br>
+</div>
+
+<div class="ED80_item_rectangle">
+Font:
+<input	id="ED80_ITEM_font_h"	class="ED80_wrap_0 ED80_width_20" type="text"><input	id="ED80_ITEM_font"					class="ED80_wrap_0 ED80_width_80" type="text"><br>
+<br>
+Select Control body:
+<textarea	id="ED80_ITEM_body"		class="ED80_width_100" rows="2" cols="20"></textarea><br>
+Storage (Custom Json):
+<textarea	id="ED80_ITEM_storage"		class="ED80_width_100" rows="4" cols="20"></textarea><br>
+</div>
+</form>
+</div>
+
+</div>
+<div>ERR: <span id="ED80_EDITOR_error_msg"></span></div><div>INFO: <span id="ED80_EDITOR_info_msg"></span></div>
+</div>
+</div>
+<script>
+</script>
+	
+</body>
+</html>
+
+<!--GUI_APP.HTML_PAGE--> 
+
+<!--GUI_APP.LANG_NEUTRAL-->
