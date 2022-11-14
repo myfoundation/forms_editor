@@ -63,15 +63,21 @@ T - TYPE [s|n|i|a|o|b|l|e] (string, number, number integer, array, object, boole
 R - RANGE (>= && <=) of any s|n|i|a|o value. Values: -1 (Don't CHECK) / pair [0, 5] / value [5] === [5, 5]
 E - check if value EQUAL on of values from list. Must be array of any values [2, 4, 6, ...]
 F - function call
+EX - put here walues like null, '' ect. which can be used as exclusions during check
+     if exclusions detected, no any check execution
 
 CHECK VALUE BY TREF CASES
 
-YOU MAY USE ALIASES:
+ALIASES IS DISABLED BY UNIFORM REASON
+
+YOU MAY USE:
 				OR
 			T	/	Type
 			R	/	Range
 			E	/	Equal
 			F	/	Function
+
+			EX	/	Exclusion
 
 YOU MAY USE ALIASES FOR T PARAM:
 				OR
@@ -83,6 +89,7 @@ YOU MAY USE ALIASES FOR T PARAM:
 			b	/	boolean
 			l	/	null
 			e	/	empty
+			j	/	json	Object or Array
 
 CODE FLOW ATTRIBUTES
 			d	/	default			- if not, reset to DEFAULT value from field D
@@ -127,7 +134,8 @@ DEFAULT, PARENT
 		ERR_R						: 1 << 1,
 		ERR_E						: 1 << 2,
 		ERR_F						: 1 << 3,
-		ERR_ANY						: -1 | 0,
+		ST_EXCLUSION				: 1 << 4, // VALUE FOUND IN EXCLUSION ARRAY
+		ERR_ANY						: -1,
 		//------------------------------------------
 	},
 
@@ -137,116 +145,124 @@ DEFAULT, PARENT
 		R			: [],	// [FROM, TO], WHERE (X >= FROM) && (X <= TO)
 		E			: [],	// EQUAL [1, 100, 1000, ...]
 		F			: function(x, RULE, RESULT) { return true; },
+		
+		EX			: [],	// ARRY WITH VALUES IS EXCLUSIONS
 	},
 	
-	TREF_check		: function(X, RULE, RESULT = { TREF_ok : true, TREF_err : 0 })
+	TREF_check		: function(X, RULE, RESULT = { TREF_ok : true, TREF_state : 0 })
 	{
 		var o=this,_=_22._;
 		
 		RESULT.TREF_ok = true;
-		RESULT.TREF_err = o.ST.StateEmpty;
+		RESULT.TREF_state = o.ST.StateEmpty;
 		
-		var err = o.ST.StateEmpty;
-		
-		if(RULE.T)
+		var st_ = o.ST.StateEmpty;
+
+		if(RULE.EX && RULE.EX.includes(X))
 		{
-			var ok = true;
-			switch(RULE.T)
+			st_ |= o.ST.ST_EXCLUSION;
+		}
+		else
+		{
+			if(RULE.T)
 			{
-				// 1
-				case 'json':
-				case 'j':
-					if(!_.isString(X) || !o.isJSON(X)) ok = false;
-				break;
+				var ok = true;
+				switch(RULE.T)
+				{
+					// 1
+					case 'json':
+						ok = _.isString(X) && o.isJSON(X);
+					break;
+					
+					// 2
+					case 'string':
+						ok = _.isString(X);
+					break;
+
+					// 3
+					case 'integer':
+						ok = _.isNumber(X) && _.isFinite(X) && ((X << 0) === X);
+					break;
+
+					// 4
+					case 'number':
+						ok = _.isNumber(X) && _.isFinite(X);
+					break;
+
+					// 5
+					case 'boolean':
+						ok = _.isBoolean(X);
+					break;
+
+					// 6
+					case 'null':
+						ok = _.isNull(X);
+					break;
+
+					// 7	empty =:= null | undefined
+					case 'empty':
+						ok = _.isNull(X) || _.isUndefined(X);
+					break;
+
+					default:
+						ok = false;
+						console.log('ERR. LOGIC ERROR');
+					break;
+				}
 				
-				// 2
-				case 'string':
-				case 's':
-					if(!_.isString(X)) ok = false;
-				break;
+				if(!ok) st_ |= o.ST.ERR_T;
+			}
 
-				// 3
-				case 'integer':
-				case 'i':
-					if(!_.isNumber(X) || ((X | 0) !== X)) ok = false;
-				break;
+			if(RULE.R)
+			{
+				var ok = true;
+				switch(true)
+				{
+					case _.isNumber(X):
+						ok = _.isFinite(X) && (X >= RULE.R[0]) && (X <= RULE.R[1]);
+					break;
+					
+					case _.isString(X):
+					case _.isArray(X):
+						ok = (X.length >= RULE.R[0]) && (X.length <= RULE.R[1]);
+					break;
 
-				// 4
-				case 'number':
-				case 'n':
-					if(!_.isNumber(X) || !_.isFinite(X)) ok = false;
-				break;
-
-				// 5
-				case 'boolean':
-				case 'b':
-					if(!_.isBoolean(X)) ok = false;
-				break;
-
-				// 6
-				case 'null':
-				case 'n':
-					if(!_.isNull(X)) ok = false;
-				break;
-
-				// 7	empty =:= null | undefined
-				case 'empty':
-				case 'e':
-					if(!_.isNull(X) || !_.isUndefined(X)) ok = false;
-				break;
-
-				default:
-				break;
+					default:
+						console.log('WARN: Range not checked. Possible logic error.');
+					break;
+				}
+				
+				if(!ok) st_ |= o.ST.ERR_R;
 			}
 			
-			if(!ok) err |= o.ST.ERR_T;
-		}
 
-		if(RULE.R)
-		{
-			var ok = true;
-			switch(true)
+			if(RULE.E)
 			{
-				case _.isNumber(X):
-					if(!((X >= R[0]) && (X <= R[1]))) ok = false;
-					if((X === NaN) || (X === Infinity) (X === -Infinity)) ok = false;
-				break;
-				
-				case _.isString(X):
-				case _.isArray(X):
-					if(!(((X.length) >= R[0]) && ((X.length) <= R[1]))) ok = false;
-				break;
-
-				default:
-					console.log('WARN: Possible logic error.');
-				break;
+				if(!RULE.E.includes(X)) st_ |= o.ST.ERR_E;
 			}
-			
-			if(!ok) err |= o.ST.ERR_R;
+
+			if(RULE.F)
+			{
+				if(!RULE.F(X, RULE, RESULT)) st_ |= o.ST.ERR_F;
+			}
 		}
 		
-
-		if(RULE.E)
-		{
-			if(!RULE.E.includes(X)) err |= o.ST.ERR_E;
-		}
-
-		if(RULE.F)
-		{
-			if(!RULE.F(X, RULE, RESULT)) err |= o.ST.ERR_F;
-		}
-		
-		RESULT.TREF_err = err;
-		RESULT.TREF_ok = !(err & o.ST.ERR_ANY);
+		RESULT.TREF_state = st_;
+		RESULT.TREF_ok = !(st_ & o.ST.ERR_ANY);
 		
 		return RESULT.TREF_ok;
 	},
 	
 	isJSON		: function (str)
 	{
-		try { return (JSON.parse(str) && !!str); } catch (e) { return false; }
+		var o=this,_=_22._;
+		try { var x = JSON.parse(str); return _.isArray(x) || o.isObject(x); } catch (e) { return false; }
 	},
 	
+	isObject	: function(X)
+	{
+  		return X instanceof Object && X.constructor === Object;
+	},
 };
 TREF_var_checker._constructor();
 
@@ -283,8 +299,8 @@ var GUI_generator =
 			// EXCHANGE STATES _M_exchange FIELD
 			//------------------------------------------
 			ST_EXCHANGE_OK					: 1 << 0,
-			ST_EXCHANGE_FAIL_type			: 1 << 1,
-			ST_EXCHANGE_FAIL_no_dom_element	: 1 << 2,
+			ST_EXCHANGE_FAIL_no_dom_element	: 1 << 1,
+			ST_EXCHANGE_FAIL_TREF_error		: 1 << 2, // TERF CHECK ERROR, SEE TREF_ok TREF_state
 			//------------------------------------------
 			
 			//------------------------------------------
@@ -297,12 +313,10 @@ var GUI_generator =
 		
 		o.ST.ST_EXCHANGE_all =
 				o.ST.ST_EXCHANGE_OK 
-				| o.ST.ST_EXCHANGE_FAIL_type 
 				| o.ST.ST_EXCHANGE_FAIL_no_dom_element;
 				
 		o.ST.ST_EXCHANGE_FAIL =
-				o.ST.ST_EXCHANGE_FAIL_type 
-				| o.ST.ST_EXCHANGE_FAIL_no_dom_element;
+				o.ST.ST_EXCHANGE_FAIL_no_dom_element;
 
 		//------------------------------------------
 		
@@ -312,7 +326,7 @@ var GUI_generator =
 		{
 			ITEM_default 		:
 			{
-				TREF				: {	T : 'string', },
+				TREF				: {	},
 				
 				_M		: o.ST.EDITOR_ITEM_INIT_multiply_w | o.ST.EDITOR_ITEM_INIT_multiply_h,
 				
@@ -536,7 +550,7 @@ var GUI_generator =
 		TREF		: null, // TREF_struct
 		
 		TREF_ok		: true,
-		TREF_err	: 0,
+		TREF_state	: 0,
 		//------------------------------------------
 	},
 			
@@ -545,6 +559,8 @@ var GUI_generator =
 		ITEMS		: [],
 		
 		FORM		: null,
+		
+		is_exchange_ok	: false,
 
 		//------------------------------------------
 		// ONLY IN EDIT MODE
@@ -552,7 +568,7 @@ var GUI_generator =
 		GRID_is_snap	: false,
 		//------------------------------------------
 
-		version			: '1.00.05',
+		version			: '1.00.06',
 	},
 	
 	// CONTEXT
@@ -647,6 +663,10 @@ GUI_generator.LAYOUT_cmd = function (cmd, layout_id, P1, P2)
 
 		case 'layout_exchange_values':
 			return o.EXCHANGE_FORM_values(layout_id,P1);
+		break;
+
+		case 'layout_check_values':
+			return o.CHECK_FORM_values(layout_id);
 		break;
 
 		case 'layout_get':
@@ -987,7 +1007,7 @@ GUI_generator.LAYOUT_generate = function (layout_id)
 	return html_form;
 }
 
-GUI_generator.EXCHANGE_ITEM_value = function (is_get_from_gui, IT)
+GUI_generator.EXCHANGE_ITEM_value = function (IT, is_get_from_gui_)
 {
 	var o=this,_=_22._;
 	
@@ -1000,16 +1020,27 @@ GUI_generator.EXCHANGE_ITEM_value = function (is_get_from_gui, IT)
 	IT.is_exchange_ok = true;
 	var st_ = o.ST.StateEmpty;
 	
+	IT._M_exchange =  o.ST.StateEmpty;
+	
 	var EL = $(`#${IT.id}`);
 	if(!EL.length)
 	{
 		console.log('ERR: Logic error. Form no have element: ' + id);
 		IT.is_exchange_ok = false;
 	}
+
+	// DEFAULT SETTINGS
+	var S = 
+	{
+		is_get_from_gui				: is_get_from_gui_,
+		is_check_tref				: true,
+	};
+	
+	if(!_.isBoolean(is_get_from_gui_)) _.extend(S, is_get_from_gui_);
 	
 	if(IT.is_exchange_ok)
 	{
-		if(is_get_from_gui)
+		if(S.is_get_from_gui)
 		{
 			switch(IT.type)
 			{
@@ -1058,18 +1089,13 @@ GUI_generator.EXCHANGE_ITEM_value = function (is_get_from_gui, IT)
 				case 'integer':
 				case 'number':
 					var tmp =
-						(IT.TREF.T == 'integer')
+						IT.TREF.T == 'integer'
 						?
 						parseInt(IT.value)
 						:
 						parseFloat(IT.value);
 						
-					if(Number.isNaN(tmp))
-					{
-						IT.is_exchange_ok = false;
-						st_ = o.ST.ST_EXCHANGE_FAIL_type;
-					}
-					else IT.value = tmp;
+					if(_.isNumber(tmp) && _.isFinite(tmp)) IT.value = tmp;
 				break;
 
 				case 'boolean':
@@ -1119,8 +1145,17 @@ GUI_generator.EXCHANGE_ITEM_value = function (is_get_from_gui, IT)
 			}
 		}
 	}
+
+	if(S.is_check_tref)
+	{
+		if(!TREF_var_checker.TREF_check(IT.value, IT.TREF, IT))
+		{
+			IT.is_exchange_ok = false;
+			st_ |= o.ST.ST_EXCHANGE_FAIL_TREF_error;
+		}
+	}
 	
-	IT._M_exchange = IT.is_exchange_ok ? o.ST.ST_EXCHANGE_OK : st_;
+	IT._M_exchange |= (IT.is_exchange_ok ? o.ST.ST_EXCHANGE_OK : st_);
 	
 	return IT.is_exchange_ok;
 }
@@ -1134,13 +1169,15 @@ GUI_generator.EXCHANGE_FORM_values = function (layout_id, is_get_from_gui_)
 
 	CTX.LAYOUT.is_exchange_ok = true;
 	
-	var is_force_static_write = false;
-	var is_get_from_gui = is_get_from_gui_;
-	if(!_.isBoolean(is_get_from_gui_))
+	// DEFAULT SETTINGS
+	var S = 
 	{
-		is_get_from_gui = is_get_from_gui_.is_get_from_gui;
-		is_force_static_write = is_get_from_gui_.is_force_static_write;
-	}
+		is_force_static_write		: false,
+		is_get_from_gui				: is_get_from_gui_,
+		is_check_tref				: true,
+	};
+	
+	if(!_.isBoolean(is_get_from_gui_)) _.extend(S, is_get_from_gui_);
 	
 	_.each(ITEMS, function(v,k,l)
 	{
@@ -1150,24 +1187,38 @@ GUI_generator.EXCHANGE_FORM_values = function (layout_id, is_get_from_gui_)
 			break;
 
 			case v.interaction_type == o.ST.INTERACTION_TYPE_static:
-				if(is_force_static_write && !is_get_from_gui) break;
+				if(S.is_force_static_write && !S.is_get_from_gui) break;
 			return;
 
 			case v.interaction_type == o.ST.INTERACTION_TYPE_skip:
-			case (v.interaction_type == o.ST.INTERACTION_TYPE_read) && (!is_get_from_gui):
-			case (v.interaction_type == o.ST.INTERACTION_TYPE_write) && (is_get_from_gui):
+			case (v.interaction_type == o.ST.INTERACTION_TYPE_read) && (!S.is_get_from_gui):
+			case (v.interaction_type == o.ST.INTERACTION_TYPE_write) && (S.is_get_from_gui):
 			return;
 			
 			default:
 			break;
 		}
 		
-		if(!o.EXCHANGE_ITEM_value(is_get_from_gui, v)) CTX.LAYOUT.is_exchange_ok = false;
+		if(!o.EXCHANGE_ITEM_value(v, S.is_get_from_gui)) CTX.LAYOUT.is_exchange_ok = false;
 	});
 	
 	return CTX.LAYOUT.is_exchange_ok;
 }
 
+GUI_generator.CHECK_FORM_values = function (layout_id)
+{
+	var o=this,_=_22._;
+	var CTX = o._CTX[layout_id];
+
+	var TREF_ok = true;
+	
+	_.each(CTX.LAYOUT.ITEMS, function(v,k,l)
+	{
+		if(!TREF_var_checker.TREF_check(v.value, v.TREF, v)) TREF_ok = false;
+	});
+	
+	return TREF_ok;
+}
 /*
 GUI_generator.LAYOUT_draw = function (layout_id)
 {

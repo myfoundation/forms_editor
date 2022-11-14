@@ -78,6 +78,7 @@ The object was developed by: Master Mentor in 2022.
 	"ED80_CHECK_ITEM_tref_R_0"	: "Check range from, &gt;=",
 	"ED80_CHECK_ITEM_tref_R_1"	: "Check range to, &lt;=",
 	"ED80_CHECK_ITEM_tref_E"	: "Check equal (Json array like [1,2, \" ect.\"])",
+	"ED80_CHECK_ITEM_tref_EX"	: "Check exclusions (Json array like [1,null, \" ect.\"])",
 
 	"ED80_ITEM_x"				: "Item X coordinate (Ctrl+Left, Ctrl+Right)",
 	"ED80_ITEM_y"				: "Item Y coordinate (Ctrl+Up, Ctrl+Down)",
@@ -190,6 +191,11 @@ Div with editable content.
     background-size: 20px 20px;
 }
 
+.ED80_field_err_css
+{
+	background-image: linear-gradient(#CB433525, #CB433525);
+}
+
 .ED80_width_100
 {
 	width:		100%;
@@ -259,7 +265,7 @@ Div with editable content.
 
 <div class="" style = "display: flex; align-content: stretch;">
 <div class="ED80_width_100">
-HGFE - HTML GUI Forms Editor (c) Master Mentor 2022 v 1.00.05
+HGFE - HTML GUI Forms Editor (c) Master Mentor 2022 v 1.00.06
 <br>
 <div>
 <div class="ED80_item_flat ED80_panel_left">
@@ -385,7 +391,8 @@ Raw tag: <textarea	id="ED80_ITEM_tag_raw_text"	class="ED80_width_100" rows="2" c
   <option value="empty">Empty</option>
 </select>
 <input	id="ED80_CHECK_ITEM_tref_R_0"		class="ED80_wrap_0 ED80_width_30" type="number">-<input	id="ED80_CHECK_ITEM_tref_R_1"			class="ED80_wrap_0 ED80_width_30" type="number"><br>
-<textarea	id="ED80_CHECK_ITEM_tref_E"		class="ED80_width_100" rows="3" cols="20"></textarea><br>
+<textarea	id="ED80_CHECK_ITEM_tref_E"		class="ED80_width_100" rows="2" cols="20"></textarea><br>
+<textarea	id="ED80_CHECK_ITEM_tref_EX"	class="ED80_width_100" rows="2" cols="20"></textarea><br>
 </div>
 
 

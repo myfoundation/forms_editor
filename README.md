@@ -47,7 +47,7 @@ var is_get_from_gui = false; // false | true
 LAYOUT_cmd('layout_exchange_values','YOUR_LAYOUT_ID', is_get_from_gui);
 
 // OR FOR INIT STATIC FIELDS AT 1-st DRAW
-LAYOUT_cmd('layout_exchange_values','YOUR_LAYOUT_ID', { is_get_from_gui:false, is_force_static_write:true,  });
+LAYOUT_cmd('layout_exchange_values','YOUR_LAYOUT_ID', { is_get_from_gui:false, is_force_static_write:true, is_check_tref:false,  });
 
 ------------------------------------------
  4. VALUES EXCHANGE REPORTS
@@ -96,6 +96,7 @@ layout_alloc				- append layout to GUI_generator set
 layout_delete				- delete layout from GUI_generator set
 layout_generate				- generate html for use in Browser DOM
 layout_exchange_values		- exchange values from layout <-> Dom
+layout_check_values			- check TREF (Type/Pange/Euality) of value
 layout_get					- get layout by layout_id
 layout_get_json				- get layout as json
 layout_clone				- clone and return layout

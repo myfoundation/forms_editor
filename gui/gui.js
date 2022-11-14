@@ -364,7 +364,7 @@ BAG.init = function()
 		{
 			id			: 'ED80_ITEM_font_h',
 			type		: 'FORM_TYPE_input_text',
-			TREF		: {	T : 'number', },
+			TREF		: {	T : 'number', EX : [''], },
 			
 			storage		:
 			{
@@ -385,6 +385,7 @@ BAG.init = function()
 		{
 			id			: 'ED80_ITEM_storage',
 			type		: 'FORM_TYPE_textarea',
+			TREF		: {	T : 'json', EX : [''], },
 			
 			storage		:
 			{
@@ -458,7 +459,7 @@ BAG.init = function()
 		{
 			id			: 'ED80_CHECK_ITEM_tref_R_0',
 			type		: 'FORM_TYPE_input_number',
-			TREF		: {	T : 'number', },
+			TREF		: {	T : 'number', EX : [''], },
 			
 			storage		:
 			{
@@ -468,7 +469,7 @@ BAG.init = function()
 		{
 			id			: 'ED80_CHECK_ITEM_tref_R_1',
 			type		: 'FORM_TYPE_input_number',
-			TREF		: {	T : 'number', },
+			TREF		: {	T : 'number', EX : [''], },
 			
 			storage		:
 			{
@@ -478,6 +479,17 @@ BAG.init = function()
 		{
 			id			: 'ED80_CHECK_ITEM_tref_E',
 			type		: 'FORM_TYPE_textarea',
+			TREF		: {	T : 'json', EX : [''], },
+			
+			storage		:
+			{
+				part_id	: 'item_tref_part',
+			}
+		},
+		{
+			id			: 'ED80_CHECK_ITEM_tref_EX',
+			type		: 'FORM_TYPE_textarea',
+			TREF		: {	T : 'json', EX : [''], },
 			
 			storage		:
 			{
@@ -525,7 +537,7 @@ function draw_layout()
 	var html = o.GG.LAYOUT_cmd('layout_generate', 'layout_edit');
 	canvas_html(o.FORM_PANEL_id, html);
 	
-	o.GG.LAYOUT_cmd('layout_exchange_values','layout_edit', { is_get_from_gui:false, is_force_static_write:true,  });
+	o.GG.LAYOUT_cmd('layout_exchange_values','layout_edit', { is_get_from_gui:false, is_force_static_write:true, is_check_tref:false,  });
 	
 	//------------------------------------------
 	// DO DRAGGABLE
@@ -719,16 +731,19 @@ function EXHANGE_values_gui(part_id, is_get_from_gui, IT)
 						break;
 						
 						case 'ED80_CHECK_ITEM_tref_E':
+						case 'ED80_CHECK_ITEM_tref_EX':
+							var NDX = (v.id == 'ED80_CHECK_ITEM_tref_E') ? 'E' : 'EX';
 							switch(true)
 							{
 								case is_get_from_gui:
-									IT.TREF.E = json_parse(v.value, null);
+									IT.TREF[NDX] = json_parse(v.value, null);
+									if(!_.isArray(IT.TREF[NDX]) || !IT.TREF[NDX].length) IT.TREF[NDX] = '';
 								break;
 								
 								case !is_get_from_gui:
-									if(IT.TREF.E) v.value = JSON.stringify(IT.TREF.E);
+									if(IT.TREF[NDX]) v.value = JSON.stringify(IT.TREF[NDX]);
 									// AVOID EMPTY ARRAY
-									if(!_.isArray(IT.TREF.E) || !IT.TREF.E.length) v.value = '';
+									if(!_.isArray(IT.TREF[NDX]) || !IT.TREF[NDX].length) v.value = '';
 								break;
 							}
 						break;
@@ -748,6 +763,14 @@ function EXHANGE_values_gui(part_id, is_get_from_gui, IT)
 	if(!is_get_from_gui)
 	{
 		o.GG.LAYOUT_cmd('layout_exchange_values','layout_editor',false);
+	}
+	else
+	{
+		_.each(ITEMS, function(v,k,l)
+		{
+			if(v.is_exchange_ok) $(`#${v.id}`).removeClass('ED80_field_err_css');
+			else  $(`#${v.id}`).addClass('ED80_field_err_css');
+		});
 	}
 }
 
