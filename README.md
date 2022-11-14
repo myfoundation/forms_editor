@@ -65,7 +65,8 @@ LAYOUT.ITEMS[i].is_exchange_ok
 
 And error reason flags in
 
-LAYOUT.ITEMS[i]._M_exchange
+LAYOUT.ITEMS[i].TREF_ok
+LAYOUT.ITEMS[i].TREF_state
 
 See section EXCHANGE STATES in GUI_generator source file.
 
